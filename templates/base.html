@@ -1,0 +1,25 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обучающий тренажёр по фишингу</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🕵️ Обучающий тренажёр: Фишинг</h1>
+            <p class="warning">⚠️ Это учебный проект. Никакие данные не передаются третьим лицам.</p>
+        </header>
+        <main>
+            {{template "content" .}}
+        </main>
+        <footer>
+            <p>&copy; 2025 Тренажёр по кибербезопасности</p>
+        </footer>
+    </div>
+</body>
+</html>
+{{end}}

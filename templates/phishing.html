@@ -1,0 +1,17 @@
+{{define "content"}}
+<section class="phishing-form">
+    <h2>Вход в аккаунт (учебная имитация)</h2>
+    <form action="/submit" method="post">
+        <div class="form-group">
+            <label for="username">Имя пользователя или email:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn">Войти</button>
+    </form>
+    <p class="note"><em>Никогда не вводите настоящие пароли в учебных тренажёрах!</em></p>
+</section>
+{{end}}
