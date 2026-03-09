@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статистика обучения</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height:100vh; padding:20px; }
+        .container { max-width:1200px; margin:0 auto; background:white; border-radius:20px; padding:30px; box-shadow:0 20px 40px rgba(0,0,0,0.1); }
+        h1 { color:#333; }
+        .stats { background:#f5f5f5; padding:20px; border-radius:10px; margin-bottom:20px; }
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin-top:15px; }
+        .stat-card { background:white; padding:15px; border-radius:8px; text-align:center; box-shadow:0 2px 4px rgba(0,0,0,0.1); }
+        .stat-number { font-size:24px; font-weight:bold; display:block; }
+        .success { color:#28a745; }
+        .danger { color:#dc3545; }
+        .warning { color:#ffc107; }
+        table { width:100%; border-collapse:collapse; margin-top:20px; }
+        th, td { padding:10px; text-align:left; border-bottom:1px solid #ddd; }
+        th { background-color:#f8f9fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Статистика фишингового обучения</h1>
+        
+        <div class="stats">
+            <h2>Общая статистика:</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">{{.Stats.TotalVisits}}</span>
+                    <span>Всего посещений</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number danger">{{.Stats.PhishingAttempts}}</span>
+                    <span>Фишинговых попыток</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number success">{{.TotalSuccessful}}</span>
+                    <span>Успешных избеганий</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number warning">{{.Stats.LegitimateCredentialsUsed}}</span>
+                    <span>Разглашено реальных данных</span>
+                </div>
+            </div>
+            
+            <div style="margin-top:20px;">
+                <h3>Статистика антивирусных предупреждений:</h3>
+                <p>Показано предупреждений: {{.AVStats.TotalWarnings}}</p>
+                <p>Ушли с страницы: <span class="success">{{.AVStats.LeftSuccessfully}}</span></p>
+                <p>Проигнорировали предупреждение: <span class="danger">{{.AVStats.IgnoredWarning}}</span></p>
+            </div>
+            
+            <p><strong>Процент попавшихся на фишинг:</strong> {{printf "%.2f" .PhishingPercent}}%</p>
+        </div>
+            
+        <h2>Детальные данные фишинговых попыток:</h2>
+        <table border="1">
+            <tr>
+                <th>Время</th>
+                <th>Данные</th>
+                <th>Тип данных</th>
+                <th>IP</th>
+            </tr>
+            {{range .Details}}
+            <tr>
+                <td>{{.Timestamp.Format "2006-01-02 15:04:05"}}</td>
+                <td>{{if .SubmittedData}}{{.SubmittedData}}{{else}}N/A{{end}}</td>
+                <td>
+                    {{if .IsLegitimate}}
+                        <span style="color: #dc3545;">⚠️ Реальные данные</span>
+                    {{else}}
+                        <span style="color: #ffc107;">🤔 Фейковые данные</span>
+                    {{end}}
+                </td>
+                <td>{{.UserIP}}</td>
+            </tr>
+            {{end}}
+        </table>
+    </div>
+</body>
+</html>

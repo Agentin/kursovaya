@@ -1,0 +1,14 @@
+[
+  {
+    "id": 0,
+    "session_id": "",
+    "visit_id": "visit_1773061336683390800_830",
+    "timestamp": "2026-03-09T16:02:16.6833908+03:00",
+    "submitted_data": "{\"password\":\"235424535\",\"username\":\"выавыаыв\"}",
+    "was_submitted": true,
+    "is_legitimate": false,
+    "is_phishing_attempt": true,
+    "user_ip": "[::1]:54375",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 YaBrowser/25.12.0.0 Safari/537.36"
+  }
+]

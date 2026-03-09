@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "session_id": "",
+    "visit_id": "visit_1773061572963479200_550",
+    "timestamp": "2026-03-09T16:06:12.9634792+03:00",
+    "submitted_data": "{\"password\":\"password\",\"username\":\"sasha\"}",
+    "was_submitted": true,
+    "is_legitimate": true,
+    "is_phishing_attempt": true,
+    "user_ip": "[::1]:54606",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 YaBrowser/25.12.0.0 Safari/537.36"
+  },
+  {
+    "id": 0,
+    "session_id": "",
+    "visit_id": "visit_1773061621557424000_555",
+    "timestamp": "2026-03-09T16:07:01.557424+03:00",
+    "submitted_data": null,
+    "was_submitted": false,
+    "is_legitimate": false,
+    "is_phishing_attempt": false,
+    "user_ip": "[::1]:54606",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 YaBrowser/25.12.0.0 Safari/537.36"
+  }
+]
