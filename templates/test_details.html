@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Детали попытки</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); padding:40px; }
+        .container { max-width:800px; margin:0 auto; background:white; border-radius:20px; padding:30px; }
+        .attempt-info { background:#f0f0f0; padding:15px; border-radius:10px; margin-bottom:20px; }
+        .question-block { margin-bottom:20px; padding:15px; border-left:4px solid #ccc; }
+        .correct { border-left-color:#28a745; background:#f0fff0; }
+        .incorrect { border-left-color:#dc3545; background:#fff0f0; }
+        .options .selected { font-weight:bold; background:#e0e0e0; }
+        .correct-option { color:#28a745; font-weight:bold; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Детали попытки #{{.Attempt.ID}}</h1>
+    <div class="attempt-info">
+        <p><strong>Уровень:</strong> {{.Attempt.Level}}</p>
+        <p><strong>Дата:</strong> {{.Attempt.CompletedAt.Format "02.01.2006 15:04:05"}}</p>
+        <p><strong>Результат:</strong> {{printf "%.1f" .Attempt.Score}}% ({{if .Attempt.Passed}}Пройден{{else}}Не пройден{{end}})</p>
+    </div>
+    <h2>Ответы на вопросы</h2>
+    {{range $idx, $d := .Details}}
+    <div class="question-block {{if $d.IsCorrect}}correct{{else}}incorrect{{end}}">
+        <p><strong>Вопрос {{add $idx 1}}:</strong> {{$d.QuestionText}}</p>
+        <div class="options">
+            <div class="{{if eq $d.SelectedOption "A"}}selected{{end}}">A. {{$d.OptionA}}</div>
+            <div class="{{if eq $d.SelectedOption "B"}}selected{{end}}">B. {{$d.OptionB}}</div>
+            <div class="{{if eq $d.SelectedOption "C"}}selected{{end}}">C. {{$d.OptionC}}</div>
+            <div class="{{if eq $d.SelectedOption "D"}}selected{{end}}">D. {{$d.OptionD}}</div>
+        </div>
+        <p><strong>Ваш ответ:</strong> {{if $d.SelectedOption}}{{$d.SelectedOption}}{{else}}не выбран{{end}}</p>
+        <p><strong>Правильный ответ:</strong> <span class="correct-option">{{$d.CorrectOption}}</span></p>
+    </div>
+    {{end}}
+    <p style="text-align:center;"><a href="/portal">← Вернуться на портал</a></p>
+</div>
+</body>
+</html>

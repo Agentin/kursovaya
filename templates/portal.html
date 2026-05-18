@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Обучающий портал по кибербезопасности</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Arial',sans-serif; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height:100vh; padding:20px; }
+        .container { max-width:1200px; margin:0 auto; background:white; border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.1); overflow:hidden; }
+        .header { background:linear-gradient(135deg,#ff6b6b 0%,#ee5a24 100%); color:white; padding:40px; text-align:center; }
+        .header h1 { font-size:2.5em; margin-bottom:10px; }
+        .disclaimer { background:#ffeaa7; color:#e17055; padding:20px; margin:20px; border-radius:10px; text-align:center; }
+        .levels-container { display:flex; flex-direction:column; gap:30px; padding:40px; }
+        .level-card { background:white; border-radius:20px; padding:25px; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-left:5px solid #4a76a8; transition:transform 0.2s; }
+        .level-card:hover { transform:translateY(-5px); }
+        .level-header { font-size:24px; font-weight:bold; color:#4a76a8; cursor:pointer; padding:10px 0; border-bottom:2px solid #eee; margin-bottom:15px; }
+        .level-header:before { content:"▼"; display:inline-block; margin-right:10px; font-size:18px; transition:transform 0.2s; }
+        .level-header.collapsed:before { transform:rotate(-90deg); }
+        .theory-content { display:none; margin:20px 0; padding:20px; background:#f8f9fa; border-radius:10px; line-height:1.6; }
+        .theory-content.visible { display:block; }
+        .button { display:inline-block; background:#4a76a8; color:white; padding:10px 25px; border-radius:25px; text-decoration:none; margin:10px 10px 0 0; border:none; cursor:pointer; font-size:16px; }
+        .practical-btn { background:#ff8c00; }
+        .badge { display:inline-block; padding:5px 15px; border-radius:20px; font-size:14px; margin-left:10px; background:#28a745; color:white; }
+        .attempts-history { margin-top:20px; padding:15px; background:#f1f9ff; border-radius:10px; }
+        .attempts-history ul { list-style:none; padding-left:0; }
+        .stats-section { background:#f8f9fa; padding:40px; text-align:center; border-top:1px solid #eee; }
+        .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:20px; }
+        .stat-item { background:white; padding:20px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+        .stat-number { font-size:2.5em; font-weight:bold; color:#667eea; display:block; }
+        .footer { background:#2d3436; color:white; padding:30px; text-align:center; }
+        .email-trainer-link { text-align:center; margin:40px 0; }
+        @media (max-width:768px) { .stats-grid { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>Кибербезопасность: учимся распознавать фишинг</h1><p>Выберите свой уровень и пройдите обучение</p></div>
+    <div class="disclaimer"><strong>⚠️ Внимание:</strong> Это учебный проект по кибербезопасности. Все ссылки ведут на тренировочные сайты.</div>
+    <div class="levels-container">
+        <!-- Базовый уровень -->
+        <div class="level-card">
+            <div class="level-header" onclick="toggleTheory('basic')">🔰 Базовый уровень (студенты)</div>
+            <div id="basic-theory" class="theory-content"><h3>Что такое фишинг?</h3><p>Фишинг — это вид интернет-мошенничества...</p><h4>Основные признаки фишинга:</h4><ul><li>Несоответствие доменного имени</li><li>Отсутствие HTTPS</li><li>Грамматические ошибки</li><li>Требование срочно ввести данные</li></ul></div>
+            <a href="/test?level=basic" class="button">Пройти тест</a>
+            {{if .Progress.basic}}<span class="badge">✔ Тест пройден</span>{{end}}
+            {{if .AttemptsBasic}}
+            <div class="attempts-history"><h4>📋 Мои предыдущие попытки:</h4><ul>{{range .AttemptsBasic}}<li><a href="/test_details?attempt_id={{.ID}}">{{.CompletedAt.Format "02.01.2006 15:04"}} — {{printf "%.1f" .Score}}% ({{if .Passed}}✔{{else}}✘{{end}})</a></li>{{end}}</ul></div>
+            {{end}}
+        </div>
+        <!-- Средний уровень -->
+        <div class="level-card">
+            <div class="level-header" onclick="toggleTheory('medium')">💼 Средний уровень (сотрудники)</div>
+            <div id="medium-theory" class="theory-content"><h3>Целевой фишинг (Spear Phishing)</h3><p>Злоумышленники собирают информацию о компании и создают персонализированные письма.</p></div>
+            <a href="/test?level=medium" class="button">Пройти тест</a>
+            {{if .Progress.medium}}<span class="badge">✔ Тест пройден</span>{{end}}
+            {{if .AttemptsMedium}}<div class="attempts-history"><h4>📋 Мои предыдущие попытки:</h4><ul>{{range .AttemptsMedium}}<li><a href="/test_details?attempt_id={{.ID}}">{{.CompletedAt.Format "02.01.2006 15:04"}} — {{printf "%.1f" .Score}}% ({{if .Passed}}✔{{else}}✘{{end}})</a></li>{{end}}</ul></div>{{end}}
+        </div>
+        <!-- Экспертный уровень -->
+        <div class="level-card">
+            <div class="level-header" onclick="toggleTheory('expert')">🛡️ Экспертный уровень (специалисты)</div>
+            <div id="expert-theory" class="theory-content"><h3>Технические аспекты фишинга</h3><p>Омоглифы, поддельные SSL-сертификаты, вредоносные вложения.</p></div>
+            <a href="/test?level=expert" class="button">Пройти тест</a>
+            {{if .Progress.expert}}<span class="badge">✔ Тест пройден</span>{{end}}
+            {{if .AttemptsExpert}}<div class="attempts-history"><h4>📋 Мои предыдущие попытки:</h4><ul>{{range .AttemptsExpert}}<li><a href="/test_details?attempt_id={{.ID}}">{{.CompletedAt.Format "02.01.2006 15:04"}} — {{printf "%.1f" .Score}}% ({{if .Passed}}✔{{else}}✘{{end}})</a></li>{{end}}</ul></div>{{end}}
+        </div>
+    </div>
+    <div style="text-align: center; margin: 30px 0;">
+        <a href="/fishing" class="button practical-btn" style="margin: 0 10px;"> Тренажёр</a>
+    </div>
+    <div class="email-trainer-link"><a href="/email_trainer" class="button">📧 Перейти к тренажёру фишинговых писем</a></div>
+    <div class="stats-section"><h2>📊 Общая статистика тестов</h2><div class="stats-grid"><div class="stat-item"><span class="stat-number">{{.TotalAttempts}}</span><span>Всего попыток</span></div><div class="stat-item"><span class="stat-number" style="color:#28a745;">{{.TotalPassed}}</span><span>Успешно сдано</span></div><div class="stat-item"><span class="stat-number" style="color:#ffc107;">{{printf "%.1f" .AvgScore}}%</span><span>Средний балл</span></div></div></div>
+</div>
+<script>
+    function toggleTheory(level) {
+        const el = document.getElementById(level+'-theory');
+        el.classList.toggle('visible');
+        el.previousElementSibling.classList.toggle('collapsed');
+    }
+</script>
+</body>
+</html>

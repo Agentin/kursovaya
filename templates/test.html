@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тест: {{if eq .Level "basic"}}Базовый{{else if eq .Level "medium"}}Средний{{else}}Экспертный{{end}} уровень</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); padding:40px; }
+        .test-container { max-width:600px; margin:0 auto; background:white; border-radius:20px; padding:30px; box-shadow:0 20px 40px rgba(0,0,0,0.1); }
+        h1 { color:#333; }
+        .question { margin-bottom:20px; padding:15px; background:#f9f9f9; border-radius:10px; }
+        .options label { display:block; margin:5px 0; }
+        button { background:#4a76a8; color:white; padding:10px 20px; border:none; border-radius:25px; cursor:pointer; }
+    </style>
+</head>
+<body>
+<div class="test-container">
+    <h1>Тест: {{if eq .Level "basic"}}Базовый{{else if eq .Level "medium"}}Средний{{else}}Экспертный{{end}} уровень</h1>
+    <form method="POST">
+        <input type="hidden" name="level" value="{{.Level}}">
+        {{range $idx, $q := .Questions}}
+        <div class="question">
+            <p><strong>{{add $idx 1}}. {{$q.QuestionText}}</strong></p>
+            <div class="options">
+                <label><input type="radio" name="{{$q.ID}}" value="A" required> A. {{$q.OptionA}}</label>
+                <label><input type="radio" name="{{$q.ID}}" value="B"> B. {{$q.OptionB}}</label>
+                <label><input type="radio" name="{{$q.ID}}" value="C"> C. {{$q.OptionC}}</label>
+                <label><input type="radio" name="{{$q.ID}}" value="D"> D. {{$q.OptionD}}</label>
+            </div>
+        </div>
+        {{end}}
+        <button type="submit">Отправить ответы</button>
+    </form>
+    <p style="text-align:center; margin-top:20px;"><a href="/portal">← Вернуться на портал</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тренажёр: Фишинговые письма</title>
+    <style>
+        body { font-family:'Segoe UI',Arial,sans-serif; background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%); margin:0; padding:20px; }
+        .container { max-width:800px; margin:0 auto; background:white; border-radius:20px; padding:30px; box-shadow:0 10px 30px rgba(0,0,0,0.1); }
+        h1 { color:#2c3e50; border-bottom:3px solid #e74c3c; padding-bottom:10px; }
+        .theory { background:#ecf0f1; padding:20px; border-radius:10px; margin:20px 0; }
+        .controls { display:flex; gap:15px; flex-wrap:wrap; margin-bottom:20px; }
+        select, input, button { padding:10px 15px; border:1px solid #bdc3c7; border-radius:5px; font-size:16px; }
+        button { background:#3498db; color:white; border:none; cursor:pointer; }
+        button:hover { background:#2980b9; }
+        .email-preview { background:#f9f9f9; border:2px dashed #e74c3c; border-radius:10px; padding:20px; margin-top:20px; }
+        .warning-note { font-size:0.9em; color:#7f8c8d; margin-top:10px; text-align:center; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📧 Тренажёр: Распознаём фишинговые письма</h1>
+    <div class="theory">
+        <h2>Как отличить фишинговое письмо?</h2>
+        <ul>
+            <li>Несоответствие адреса отправителя</li>
+            <li>Срочность и угрозы</li>
+            <li>Грамматические ошибки</li>
+            <li>Подозрительные ссылки</li>
+            <li>Неожиданные вложения</li>
+        </ul>
+    </div>
+    <form method="POST">
+        <div class="controls">
+            <input type="email" name="email" placeholder="Ваш email (необязательно)">
+            <select name="sim_type">
+                <option value="bank">Письмо от банка</option>
+                <option value="social">Письмо из соцсети</option>
+                <option value="delivery">Письмо от службы доставки</option>
+            </select>
+            <button type="submit" name="generate_email" value="1">Показать пример письма</button>
+        </div>
+    </form>
+    {{if .ShowEmail}}
+    {{if .ShowEmail}}
+<div class="email-preview">
+    <h3>📨 Пример фишингового письма (тип: {{.EmailType}})</h3>
+    {{.EmailHTML}}
+    <p class="warning-note">⚠️ Это УЧЕБНЫЙ пример. Ссылка ведёт на тренировочный сайт.</p>
+</div>
+{{end}}
+    {{end}}
+    <p style="text-align:center; margin-top:30px;"><a href="/portal">← Вернуться на портал</a></p>
+</div>
+</body>
+</html>

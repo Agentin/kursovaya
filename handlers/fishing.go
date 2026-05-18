@@ -60,5 +60,5 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		ProgressWidth:   progressWidth,
 	}
 
-	renderTemplate(w, "index", data)
+	renderTemplate(w, "fishing", data)
 }

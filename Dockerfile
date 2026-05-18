@@ -1,0 +1,25 @@
+FROM golang:1.25.0 AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+# Сборка статического бинарника для Linux (без CGO)
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o phishing-trainer .
+
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /root/
+
+COPY --from=builder /app/phishing-trainer .
+COPY --from=builder /app/templates ./templates
+COPY --from=builder /app/static ./static
+
+EXPOSE 8080
+
+CMD ["./phishing-trainer"]

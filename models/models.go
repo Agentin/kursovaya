@@ -2,26 +2,27 @@ package models
 
 import "time"
 
+// --- Simulation (VK/OK тренажёры) ---
 type SimulationResult struct {
-	ID                int       `json:"id"`
-	SessionID         string    `json:"session_id"`
-	VisitID           string    `json:"visit_id"`
-	Timestamp         time.Time `json:"timestamp"`
-	SubmittedData     *string   `json:"submitted_data"`
-	WasSubmitted      bool      `json:"was_submitted"`
-	IsLegitimate      bool      `json:"is_legitimate"`
-	IsPhishingAttempt bool      `json:"is_phishing_attempt"`
-	UserIP            string    `json:"user_ip"`
-	UserAgent         string    `json:"user_agent"`
+	ID                int
+	SessionID         string
+	VisitID           string
+	Timestamp         time.Time
+	SubmittedData     *string
+	WasSubmitted      bool
+	IsLegitimate      bool
+	IsPhishingAttempt bool
+	UserIP            string
+	UserAgent         string
 }
 
 type AVWarningStat struct {
-	ID                 int    `json:"id"`
-	SessionID          string `json:"session_id"`
-	VisitID            string `json:"visit_id"`
-	WarningShown       bool   `json:"warning_shown"`
-	UserLeft           bool   `json:"user_left"`
-	UserIgnoredWarning bool   `json:"user_ignored_warning"`
+	ID                 int
+	SessionID          string
+	VisitID            string
+	WarningShown       bool
+	UserLeft           bool
+	UserIgnoredWarning bool
 }
 
 type Stats struct {
@@ -56,4 +57,55 @@ type StatsPage struct {
 	TotalSuccessful int
 	PhishingPercent float64
 	Details         []SimulationResult
+}
+
+// --- Тесты и портал ---
+type TestQuestion struct {
+	ID            int
+	Level         string
+	QuestionText  string
+	OptionA       string
+	OptionB       string
+	OptionC       string
+	OptionD       string
+	CorrectOption string
+}
+
+type TestAttempt struct {
+	ID             int
+	SessionID      string
+	Level          string
+	Score          float64
+	TotalQuestions int
+	Passed         bool
+	CompletedAt    time.Time
+}
+
+type TestAnswer struct {
+	ID             int
+	AttemptID      int
+	QuestionID     int
+	SelectedOption string
+	IsCorrect      bool
+}
+
+type AttemptDetail struct {
+	QuestionText   string
+	OptionA        string
+	OptionB        string
+	OptionC        string
+	OptionD        string
+	CorrectOption  string
+	SelectedOption string
+	IsCorrect      bool
+}
+
+// --- Тренажёр писем ---
+type EmailSimulationStats struct {
+	ID             int
+	SessionID      string
+	EmailProvided  *string
+	SimulationType string
+	ClickedLink    bool
+	CreatedAt      time.Time
 }
